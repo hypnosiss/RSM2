@@ -40,10 +40,10 @@
 \twocolumn[
 	\maketitle
 	\begin{abstract}
-The use of metaheuristics (ant colony search, genetic algorithm, simulated annealing) in playing the game of chess as one of the players against an external artificial intelligence.
+	This paper reflects on metaheuristics algorithms (genetic algorithm and simulated annealing) implemented for playing chess for standard and arbitrary initial arrangement of the chessboard. It is a new idea especially the possibility of starting the game from arbitrary initial arrangement of the chessboard which allows to consider certain close to the end of the game situations. external artificial intelligence is used for lerning of implemented algorithms. New software experimentation system is developed and described with explaining of its features. Finally the results are presented and summarised with conclusions and new ideas for research extension. The implemented algorithms seem to achieve not satisfactory results.
 	{
 		\begin{description} 
-		\item[Index Terms:] \emph{game, chess, metaheuristics, artificial intelligence, ant colony, genetic, simulated annealing, learning, artificial intelligence, AI}
+		\item[Index Terms:] \emph{chess; metaheuristics; artificial intelligence; genetic; simulated annealing}
 		\end{description}
 	}
 	\end{abstract}
@@ -53,11 +53,13 @@ The use of metaheuristics (ant colony search, genetic algorithm, simulated annea
 \section{Introduction}
 \label{sec:introduction}
 
-In the age of quickly developing computers there is more and more need for good Artificial Intelligence. A significant number of IT systems tries to appear intelligent one way or another. One of the fields where intelligence appears to be an important factor are multiplayer games played for fun and competitively for hundreds of years. There are numerous methods to imitate an intelligence - neural networks, fuzzy logic, decision trees. Many of the these methods are being improved upon to this day. Metaheuristics are commonly used to find good, not necessarily optimal solutions for optimization problems and could be used to imitate an real player.
+In the age of quickly developing computers there is more and more need for good Artificial Intelligence. A significant number of IT systems tries to appear intelligent one way or another. One of the fields where intelligence appears to be an important factor are multiplayer games played for fun and competitively for hundreds of years. There are numerous methods to imitate an intelligence - neural networks, fuzzy logic, decision trees. Many of these methods are being improved upon to this day. Metaheuristics are commonly used to find good, not necessarily optimal solutions for optimization problems and could be used to imitate a real player.
 
 The game of chess drew our attention. It is a game known to most and its rules make for some very complicated strategies thanks to emergent behaviour of the chess system. Worldwide competitions are organized, which verify players skills in this complex game. One of the most important factors in players skills comes from experience - the training. Each chess figure has well-defined moves it is able to take, which results in an astoundingly big number of possible scenarios. A new player quickly finds out that some pieces are more important than others and subconsciously assign to them different weights. It is an important property, which is generally taken into consideration when designing an artificial chess player.~\cite{comparison}
 
 A real chess game is not deterministic from the perspective of one of the players. However, a metaheuristic could be used in this situation to learn from its own mistakes when playing a game of chess, especially when the opponent always uses the same strategy (which is the case when playing with a normal chess AI). The objective of this research is to find out how would metaheuristic algorithms, such as genetic, ant colony search and simulated annealing behave when used as an artificial intelligence in chess.
+
+The paper is organised as follows: Section 2 contains the description of considered problem and its mathematical model. In Section 3 the experimentation system being GUI is introduced and described. Section 4 covers description and results for Genetic Algorithm and Simulated Annealing and also ideas for their enhancements, separately for each algorithm. Section 5 contains ideas for improvements in application. Section 6 presents conclusions and possibilities for further work
 
 \section{Optimization Problem}
 \label{sec:problem}
@@ -99,7 +101,7 @@ Such that:
 For learning purposes a real, competitive artificial intelligence was required. A choice has been made to use an external chess engine, which provides required functionality. Such engines commonly implement the Universal Chess Interface (UCI)~\cite{uci} for two-way communication between outside application (like the one made for this research) and the engine implementing an artificial intelligence. 
 In the end we have chosen to use Firenzina Engine~\cite{firenzina} because of its good implementation of UCI standard and being able to make good moves in a very short amount of time (one milisecond).
 
-From the side of our application the UCI interface had to be implemented, as well as the whole set of chess rules so that human player can know which moves are valid (through graphical cues). Metaheuristics also required this knowledge, because they have to start from making random moves chosen from the set of valid ones. A Graphical User Interface (GUI) was also fully implemented for user's convinience.
+From the side of our application the UCI interface had to be implemented, as well as the whole set of chess rules so that human player can know which moves are valid (through graphical cues). Metaheuristics also require this knowledge, because they have to start from making random moves chosen from the set of valid ones. A Graphical User Interface (GUI) was also fully implemented for user's convinience.
 
 \subsection{GUI}
 \label{sec:uci}
@@ -120,7 +122,7 @@ Figure \ref{fig:initialRunPanel} shows run panel that is displayed after startin
 	\label{fig:initialRunPanelAfterRun}
 \end{figure}
 
-Figure \ref{fig:initialRunPanelAfterRun} shows the run panel after pressing the run button. Initial locations of chessmen are set according to chess rules. In the bottom  right corner of the board the is a square coloured black or white depending on which player is expected to make the next move.
+Figure \ref{fig:initialRunPanelAfterRun} shows the run panel after pressing the run button. Initial locations of chessmen are set according to chess rules. In the bottom right corner of the board there is a square coloured black or white depending on which player is expected to make the next move.
 
 \begin{figure}[!htb]
 	\centering
@@ -140,7 +142,7 @@ The application allows the possibility to start a game from any position other t
 
 On the right side from the run button one can see the textbox responsible for showing the history of the movements as depicted in figure \ref{fig:runPanelWithMovementsHistory}. This is the full history of movements including movements that was made using the textbox above the run button and its primary use is to copy it into a move history field to always start the game from this position.
 
-At the top of the application are tabs for metaheuristics, where the learning phase can be started, which are will be described in according sections later.
+At the top of the application are tabs for metaheuristics, where the learning phase can be started, which will be described in according sections later.
 
 \section{Algorithms}
 \label{sec:project}
@@ -158,7 +160,7 @@ For ant colony search algorithm a mapping is created between a placement of ches
 	\label{fig:pheromones}
 \end{figure*}
 
-Ant is defined here as a chess player, that uses pheromones to choose a move when it is metaheuristic's time to make a choice of movement. Ant can be a part of a colony, in which case the colony provides the pheromones or it can be independent (used for Greedy Mode). Pheromones can be saved to and loaded from a file. When an ant finds itself on a board that has not yet been added to pheromones a new pheromone is created (possible moves for the board are computed and assigned equal real values).
+Ant is defined here as a chess player, that uses pheromones to choose a move when it is metaheuristic's time to make a choice of movement. Ant can be a part of a colony, in which case the colony provides the pheromones or it can be independent (used for Greedy Mode). Pheromones can be stored to and loaded from a file. When an ant finds itself on a board that has not yet been added to pheromones a new pheromone is created (possible moves for the board are computed and assigned equal real values).
 
  Ant can work in one of two modes: 
 \begin{itemize}
@@ -194,7 +196,7 @@ where~$v_{new}$ is the new value, ~$v_{old}$ is the old value,~$i$ is the index 
 where~$v_{new}$ is the new value, ~$v_{old}$ is the old value and~$dissipation$ is a parameter. 
 \end{enumerate}
 
-Pheromones can be saved to a file. The file consists of a list of pheromones, which can be used when playing in the Run panel. Each is described with two lines:
+Pheromones can be stored to a file. The file consists of a list of pheromones, which can be used when playing in the Run panel. Each is described with two lines:
 \begin{enumerate}
  	\item String representation of a board, left to right, bottom to up, where \# means no chessman, upper case letters mean white chessmen and lower case letters mean black chessmen \hfill \\
 	\item A list of moves. Each move is described by five integer values. First two are the coordinates of chessman to move, third and fourth where to move the chessman to, the fifth is a special value used for promotion (when a pawn becomes another chess piece) and the sixth a real value of pheromone describing its effectiveness. \hfill \\
@@ -322,8 +324,7 @@ For almost 2 thousand tries Artificial Inteligence was winning. The importance o
 \label{sec:annealing}
 
 \subsubsection{Idea}
-Simulated annealing is a method for finding a good (not necessarily optimal) solution to an optimization problem.
-There are many optimization algorithms, including ant search, genetic algorithms, tabu search, and more. Simulated annealing's advantage is that it avoids getting caught at local minimums solutions that are better than any others nearby, but are not the best.
+Simulated annealing as any other metaheuristics algorithm is used when search space is too large to use exact methods. The algorithm seeks to find an optimal solution (but not necessarily finds it) unlike many metaheuristics algorithms it allows with certain probability for the adoption of worse solution what makes the algorithm resistant to getting cought in local minimum solutions
 
 \begin{figure*}[!htb]
 	\centering
@@ -332,7 +333,9 @@ There are many optimization algorithms, including ant search, genetic algorithms
 	\label{fig:annealingSchema}
 \end{figure*}
 
-In the first game the Algorithm chooses random possible moves, all moves performed by AI and the algorithm are saved. In the end of the game cost function is calculated and saved. Then the algorithm simulates another game (iteration) in which chooses a saved moves, or a random possible moves and it depends on temperature. If the algorithm has chosen a random move, then the opponent's move is performed by AI, but if saved move was choosed then opponent move is also a saved move. Not always saved move can be performed therefore in case of one cannot make a saved move, a random move is performed. If there is a checkmate or maximum number of turns is achived the game ends and cost function is calculated if this cost function is greater than previous one then old saved moves and cost function are exchanged for present. There can occour a situation in which game ends before achieving maximum number of turns (for example if there is a checkmate) and its cost function is greater than the previous one. Then in the next simulated game the algorithm will have less saved moves for example 4 and when this number is exceeded random moves are performed in metaheuristic's turns and AI moves in opponent turns. The cost function is based only on weights of chess pieces. Weights for chess pieces are as follows:
+The algorithm consideres typically optimaisation task which is every game it plays, it is not intended to learn and then play with other player.
+The algorithm plays his first game choosing random moves. At the end of the first game all moves (including opponent's moves) are stored and cost function is calculated (at this point it is the best cost function). Then the algorithm simulate another game (iteration) in which depending on the temperature it chooses a stored move or a random move. If the algorithm chooses a stored move for its turn then a stored move is chosen for the opponent's turn, but if a random move is chosen then the opponent's move is performed by AI (and the stored move is omitted in further game). At the beginning the algorithm chooses random moves often but in any another iteration the probability of random move decreases. If there is a checkmate or maximum number of turns is achived the game ends. At the end of every simulated game (every iteration) cost funcion is calculated and if it is better than the best stored cost function then the old stored moves and the best cost function are exchanged for present ones. Sometimes a stored move cannot be performed becouse of a change in previous moves therefore in such situations random move is performed.
+There can occour a situation in which game ends before achieving maximum number of turns (for example if there is a checkmate) and its cost function is greater than the previous one. Then in the next simulated game the algorithm will have less stored moves for example 4 and when this number is exceeded random moves are performed in metaheuristic's turns and AI moves in opponent turns. The cost function is based only on weights of chess pieces. Weights for chess pieces are as follows:
 
 pawn - 1
 
@@ -347,7 +350,7 @@ queen - 10
 king - 1000
 
 Weights are positive for own pieces and negetive for opponent pieces.
-It is important to assign a weight to the king instead of giving weight (in absolute value) value for checkmate, because then it is possible to consider better and worse situations for games that has no max number of turns. without that the algorithm would have all the time the same sequence of saved moves expect very unlikly situation that metaheuristics wins, then the sequence would change only once.
+It is important to assign a weight to the king instead of giving weight (in absolute value) value for checkmate, because then it is possible to consider better and worse situations for games that end before achieving max number of turns. without that the algorithm would have all the time the same sequence of stored moves except very unlikly situations that metaheuristics wins, then the sequence would change only once.
 
 \subsubsection{GUI}
 GUI is depicted in figure \ref{fig:annealingTab}).
@@ -373,7 +376,7 @@ An integer number that says how many times the algorithm should repeat an action
 \end{itemize}
 
 \subsubsection{experiments}
-It is hard to tell what parameters should be used to obtain the best results due to big randomness of the algorithm's work. Some good parameters have been chosen:
+Due to big randomness of the algorithm work it is not simple to tell which parameters should be used in order to obtain the best results. Using trial and error method following parameters have been chosen:
 \begin{itemize}
 	\item Initial temperature = 0.8 \hfill \\
 
@@ -381,7 +384,7 @@ It is hard to tell what parameters should be used to obtain the best results due
  	
 in this case the temperature for the last iteration equals $10\%$ of the initial temperature. that means $7.2\%$
 \end{itemize}
-Of course the greater number of the "number of internal iterations" parameter the greater the chance to achieve better solution. Experiments was made in a range from 10 to 20000 for "number of internal iterations" parameter parameter.
+Of course the greater number of the "number of internal iterations" parameter the greater the chance to achieve better solution. Experiments was made in a range from 10 to 20000 for "number of internal iterations" parameter.
 Experiments was made most often for value of 10 for "Max number of turns" parameter. There were considered 2 kinds of initial board, standard initial situation for chess and situation depicted in figure 5.
 
 \begin{figure}[!htb]
@@ -391,7 +394,7 @@ Experiments was made most often for value of 10 for "Max number of turns" parame
 	\label{fig:initialBoard}
 \end{figure}
 
-For above board metaheuristic player is white and it is actually its turn.
+For both boards metaheuristic player is white and it is actually its turn.
  
 \subsubsection{Result}
 Unfortunetelly checkmate was not achived. The best result for standard initial chess board was cost function: 21.0 for parameters:
@@ -418,22 +421,24 @@ And for initial situation depicted in figure \ref{fig:initialBoard} the best res
 
 in time: 3734 seconds
 
-It is rare to achive a checkmate by the algorithm due to several precised moves has to be performed to obtain one-time increasing of the cost function. The algorithm would work better if the cost function better expressed a situation on the board. Actually only a material situation is considered, there is a possibility to consider a positional situation, for example the weight of a pawn would increase after each move towards promotion field or the weight of a rook would increase with the number of possible moves that can be performed by the rook, it could be also considered if certain chess piece is protected or not. Different wariants of the algorithm could be considered, the algorithm could simultaneously play for example 5 different games instead of one and at the end of all games choose moves (that would exchange previous saved moves) from the game that achieved the greatest cost function (as far as this cost function would be greater than previous one), or the algorithm could save only its moves and every opponent move would be performed by AI.
+It is difficult to achive a checkmate by the algorithm due to several precised moves has to be performed to obtain one-time increasing of the cost function. Different wariants of the algorithm could be considered, the algorithm could simultaneously play for example 5 different games instead of one and at the end of all games choose moves (that would exchange previous stored moves) from the game that achieved the greatest cost function (as far as this cost function would be greater than previous one), or the algorithm could save only its moves and every opponent move would be performed by AI.
 
 \section{Improvements}
 \label{sec:improvements}
 
-Some general improvements should be considered for further development of the application:
+Some improvements in application could be considered for further development:
 \begin{itemize}
- 	\item Putting all the variables and modes into GUI, so that a wider range of possible parameters can be changed non-programically 
- 	\item Adding new engines that implement UCI (other than Firenzina) and use them randomly when choosing a move by AI. This way the metaheuristics will have much wider knowledge. One artificial intelligence can sometimes make mistake moves, but if many engines were to be used randomly, then it would probably not be just a mistake on the part of external AI, but a truly needed sacrifice.
- 	\item The learning phases of algorithms are in need of previous data import, so that they can continue learning from a previously saved point.
+ 	\item Provaiding a possibility of entering all the modes and variables in GUI, so that one is able to change a wider range of parameters non-programically 
+ 	\item provaiding new engines implementing UCI (other than Firenzina). They could be used randomly as AI is choosing his move. Through that the metaheuristics algorithms would have much wider knowledge. Sometimes mistake moves can be made due to using only one artificial intelligence, but by using several different engines randomly, it would with high probability not be just a mistake of external AI, but a truly needed sacrifice.
+ 	\item Provaiding previous data import for algorithms to make them able to continue learning from previous stored points.
 \end{itemize}
 
 \section{Conclusion}
 \label{sec:conclusion}
 
 In conclusion, our experiments proved that it is possible to make a kind of artificial intelligence for chess using metaheuristics that can play better than a completly random algorithm. The results can vary greatly between not only a chosen metaheuristic, but also the chosen parameters and algorithm's details. However, it has to be emphasized that metaheuristics require a huge amount of learning time even when being close to the end of the game and as such would not be viable alternative for a standard type of artificial intelligence.
+The algorithm would work better if the cost function better expressed a situation on the board. Actually only a material situation is considered, there is a possibility to consider a positional situation, for example the weight of a pawn would increase after each move towards promotion field or the weight of a rook would increase with the number of possible moves that can be performed by the rook, it could be also considered if certain chess piece is protected or not.
+Implementation of prediction of one or several moves ahead could make the algorithms work better. Through that the algorithms could avoid simple tricks depending on temptation by the enemy to execute a favorable movement in this turn but obtaining much worse situation in next turn, for example, in this turn you can refute my bishop but in another turn I will refute your queen.
 
 \begin{thebibliography}{99}
 
