@@ -53,11 +53,14 @@
 \section{Introduction}
 \label{sec:introduction}
 
-In the age of quickly developing computers there is more and more need for good Artificial Intelligence. A significant number of IT systems tries to appear intelligent one way or another. One of the fields where intelligence appears to be an important factor are multiplayer games played for fun and competitively for hundreds of years. There are numerous methods to imitate an intelligence - neural networks, fuzzy logic, decision trees. Many of these methods are being improved upon to this day. Metaheuristics are commonly used to find good, not necessarily optimal solutions for optimization problems and could be used to imitate a real player.
+In nowadays metaheuristics are increasingly used in different aspects. They bases on nature. Many problems are tried solve by those procedures which unfortunately can not give the optimal global solution but can find the good one. Main goal is to use yet another Artificial Intelligence. There are significant number of IT systems tries to appear intelligent one way to another. For example decision trees, neural networks, fuzzy logic. Each of them has different benefits. Therefore the aim is to extend the database of known solutions to have more potentials. There are many fields where metaheuristics can be applied. One of them where intelligence has major factor are multiplayer games. Today appeard e-sport, which many players contend together. Learning with artifical intelligence which imitates a real player could be very helpful. 
 
-The game of chess drew our attention. It is a game known to most and its rules make for some very complicated strategies thanks to emergent behaviour of the chess system. Worldwide competitions are organized, which verify players skills in this complex game. One of the most important factors in players skills comes from experience - the training. Each chess figure has well-defined moves it is able to take, which results in an astoundingly big number of possible scenarios. A new player quickly finds out that some pieces are more important than others and subconsciously assign to them different weights. It is an important property, which is generally taken into consideration when designing an artificial chess player.~\cite{comparison}
+In the paper we consider the game of chess. The game is popular and its rules are known for many people. There are complex and therefore can be applied many strategies. The competence of predicting next few moves are also here used. The humans are using several methods. They are basing on their experience, strategies and predicting skills.
+The most important here is training. Each chess figure has well-defined moves it is able to take, which results in an astoundingly big number of possible scenarios. A new player quickly finds out that some pieces are more important than others and subconsciously assign to them different weights. It is an important property, which is generally taken into consideration when designing an artificial chess player.~\cite{comparison}
 
-A real chess game is not deterministic from the perspective of one of the players. However, a metaheuristic could be used in this situation to learn from its own mistakes when playing a game of chess, especially when the opponent always uses the same strategy (which is the case when playing with a normal chess AI). The objective of this research is to find out how would metaheuristic algorithms, such as genetic, ant colony search and simulated annealing behave when used as an artificial intelligence in chess.
+
+From the perspective of one of the players a real chess game is not deterministic. Nevertheless, a metaheuristic could be used in this situation to learn from its own miastakes when playing a game of chess, especially when the rival always uses the same strategy (which is the case when playing with a normal chess AI). The main goal of this research is to check how would genetic, ant colony search nad simulated annealing algorithms behave when used as an artificial intelligence in chess game.
+
 
 The paper is organised as follows: Section 2 contains the description of considered problem and its mathematical model. In Section 3 the experimentation system being GUI is introduced and described. Section 4 covers description and results for Genetic Algorithm and Simulated Annealing and also ideas for their enhancements, separately for each algorithm. Section 5 contains ideas for improvements in application. Section 6 presents conclusions and possibilities for further work
 
@@ -69,22 +72,22 @@ The problem describes a standard game of chess, with a square board of 64 fields
 \subsection{Mathematical model}
 \label{sec:model}
 
-Given:
+\textbf{indices}
 \begin{itemize}
  	\item $t \in N$ - initial game turn 
  	\item $n \in N$ - maximum number of game turns intended for playing 
  	\item $i,j \in \{1,2,3,4,5,6,7,8\}$ - number of rows and columns
+\end{itemize}
+\\
+\textbf{variables}
+\begin{itemize}
  	\item $B_{8,8,t}$ - fields on the board taking values $v_{i,j,t}\in R$ describing the field on board (e.g. the chessmen standing on field) during turn t
  	\item f($B_{8,8,t},v_{i,j,t}$) - takes negatives values for bad situations on the field $v_{i,j,t}$ (e.g. an opponent's piece) positive for good situations (e.g. player's piece)
 \end{itemize}
+\\
+\textbf{objective}
 
-To find:
-
-\begin{itemize}
-	\item a series of movements starting from $B_{8,8,t}$ and ending in $B_{8,8,t+n}$ according to rules of chess
-\end{itemize}
-
-Such that:
+Find a series of movements starting from $B_{8,8,t}$ and ending in $B_{8,8,t+n}$ according to rules of chess
 
 \begin{equation}
 \label{eq:costfunction}
@@ -246,6 +249,9 @@ The really important change was observed when the Equation~\ref{eq:choosingequat
 \label{sec:genetic}
 
 \subsubsection{Idea}
+That is the cost, hence computing problems are not highly important. The memory should be considered. The "human DNA contains about 3 billion nucleotides constituting genes, regulatory sequences and other non-coding regions all residing in a one-dimensional sequence that is organized in 3-dimensional space" [(http://www.biomedcentral.com/content/pdf/1742-4682-7-3.pdf)]. This is the huge "hard disk" which can store any informations.
+
+
 Our second proposal of a metaheuristic algortihm is the genetic algortihm. It is purely related to how living beings nature evolves through the ages. Looking at it from the perspective of one life beaing equal to one chess game, it may give interesting results. The population consist of many individuals living through their lifes, which in this case are end up being games. The individual is a set of gens which here are called moves. From a programming point of view a mapping is created between a placement of chess pieces on a chessboard and a move for the current player, when provided such board. Each individual is additionally annotated with a real value, which describes the fitness of the final move, calculated with help of cost function (Equation~\ref{eq:costfunction}).
 
 In the application each metaheuristic algorithm works as a set of players. Even Artificial Inteligence is marked as player. Hence different players can play against each other. Genetic player is divided into two modes (similar to the ant colony algorithm's):
@@ -451,3 +457,4 @@ Implementation of prediction of one or several moves ahead could make the algori
 
 \end{thebibliography}
 \end{document}
+
