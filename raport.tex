@@ -40,7 +40,7 @@
 \twocolumn[
 	\maketitle
 	\begin{abstract}
-	This paper reflects on metaheuristics algorithms (genetic algorithm and simulated annealing) implemented for playing chess for standard and arbitrary initial arrangement of the chessboard. It is a new idea especially the possibility of starting the game from arbitrary initial arrangement of the chessboard which allows to consider certain close to the end of the game situations. external artificial intelligence is used for lerning of implemented algorithms. New software experimentation system is developed and described with explaining of its features. Finally the results are presented and summarised with conclusions and new ideas for research extension. The implemented algorithms seem to achieve not satisfactory results.
+	This paper reflects on metaheuristics algorithms (genetic algorithm and simulated annealing) implemented for playing chess for standard and arbitrary initial arrangement of the chessboard. It is a new idea especially the possibility of starting the game from arbitrary initial arrangement of the chessboard which allows to consider certain close to the end of the game situations. external artificial intelligence is used for learning of implemented algorithms. New software experimentation system is developed and described with explaining of its features. Finally the results are presented and summarised with conclusions and new ideas for research extension. The implemented algorithms seem to achieve not satisfactory results.
 	{
 		\begin{description} 
 		\item[Index Terms:] \emph{chess; metaheuristics; artificial intelligence; genetic; simulated annealing}
@@ -53,7 +53,7 @@
 \section{Introduction}
 \label{sec:introduction}
 
-In nowadays metaheuristics are increasingly used in different aspects. They base on nature. Many problems are tried solve by those procedures which unfortunately can not give the optimal global solution but can find the good one. That is the cost, hence computing is not highly important. The memory should be considered. The "human DNA contains about 3 billion nucleotides constituting genes, regulatory sequences and other non-coding regions all residing in a one-dimensional sequence that is organized in 3-dimensional space" [(http://www.biomedcentral.com/content/pdf/1742-4682-7-3.pdf)]. This is the huge memory in which can be stored any informations.
+In nowadays metaheuristics are increasingly used in different aspects. They base on nature. Many problems are tried solve by those procedures which unfortunately can not give the optimal global solution. That is the cost, hence computing is not highly important. The memory should be considered. The "human DNA contains about 3 billion nucleotides constituting genes, regulatory sequences and other non-coding regions all residing in a one-dimensional sequence that is organized in 3-dimensional space" [(http://www.biomedcentral.com/content/pdf/1742-4682-7-3.pdf)]. This is the huge memory in which can be stored any informations.
 
 Main goal is to use yet another Artificial Intelligence. There are significant number of IT systems try to appear intelligent one way to another. For example decision trees, neural networks, fuzzy logic. Each of them has different benefits. Therefore the aim is to extend the database of known solutions to have more potentials. There are many fields where metaheuristics can be applied. One of them where intelligence has major factor are multiplayer games. Today appeard e-sport, which many players contend together. Learning with artifical intelligence which imitates a real player could be very helpful. 
 
@@ -104,7 +104,7 @@ Find a series of movements starting from $B_{8,8,t}$ and ending in $B_{8,8,t+n}$
 \label{sec:engine}
 
 For learning purposes a real, competitive artificial intelligence was required. A choice has been made to use an external chess engine, which provides required functionality. Such engines commonly implement the Universal Chess Interface (UCI)~\cite{uci} for two-way communication between outside application (like the one made for this research) and the engine implementing an artificial intelligence. 
-In the end we have chosen to use Firenzina Engine~\cite{firenzina} because of its good implementation of UCI standard and being able to make good moves in a very short amount of time (one milisecond).
+In the end Firenzina Engine~\cite{firenzina} has been used because of its good implementation of UCI standard and being able to make good moves in a very short amount of time (one milisecond).
 
 From the side of our application the UCI interface had to be implemented, as well as the whole set of chess rules so that human player can know which moves are valid (through graphical cues). Metaheuristics also require this knowledge, because they have to start from making random moves chosen from the set of valid ones. A Graphical User Interface (GUI) was also fully implemented for user's convinience.
 
@@ -151,101 +151,6 @@ At the top of the application are tabs for metaheuristics, where the learning ph
 
 \section{Algorithms}
 \label{sec:project}
-
-\subsection{Ant colony}
-\label{sec:ant}
-
-\subsubsection{Idea}
-For ant colony search algorithm a mapping is created between a placement of chess pieces on a chessboard and a list of possible moves the current player is able to do, when provided such board. Each move on this list is additionally annotated with a real value, which describes the fitness of the move. Moves with higher fitness ought to yield us better results. Such mapping is called a pheromone and a set of them pheromones (Figure \ref{fig:pheromones}).
-
-\begin{figure*}[!htb]
-	\centering
-	\includegraphics[width=1\textwidth]{ant/pheromones.png} 
-	\caption{Diagram of the implemented ant colony search algorithm with visualisation of pheromones for one iteration with one ant}
-	\label{fig:pheromones}
-\end{figure*}
-
-Ant is defined here as a chess player, that uses pheromones to choose a move when it is metaheuristic's time to make a choice of movement. Ant can be a part of a colony, in which case the colony provides the pheromones or it can be independent (used for Greedy Mode). Pheromones can be stored to and loaded from a file. When an ant finds itself on a board that has not yet been added to pheromones a new pheromone is created (possible moves for the board are computed and assigned equal real values).
-
- Ant can work in one of two modes: 
-\begin{itemize}
- 	\item Adventurous Mode \hfill \\
-		Used for learning. In this case the ant works for the betterment of its colony. It chooses moves randomly, according to the values of pheromones. This strategy improves the pheromones, by visiting a wide range of possible boards, which results in frequent updates and addition of new pheromones. The probability of choosing move M (with real value v):
-\begin{equation}
-\label{eq:choosingequation}
-	P(M) = \frac{v_m + |min(V)|}{\sum V + n|(min(V))|}
-\end{equation}
-where~$V$ are all values in a given pheromone,~$v_m$ the value for move and~$n$ is the length of~$V$.
-
-	\item Greedy Mode \hfill \\
-		Used for testing and real games. In this case the ant plays for the best end result in its game. Ant chooses a move from the pheromone with the highest value to choose the best move in each turn.
-\end{itemize}
-
-The process of learning consists of many iterations of ants in Adventurous Mode working as a colony. Each iteration amounts to a few phases:
-\begin{enumerate}
- 	\item Start new games and wait for them to end \hfill \\
-		Each ant plays one game of chess and remembers all boards it has run across, all moves it has chosen to do and the
-the cost function of the series of movements (value of cost function for last board).
-	\item Update pheromones \hfill \\
-		For each ant the pheromones connected to visited boards are updated by a fraction of the value of cost function of the whole series of movements.
-\begin{equation}
-	v_{new} = v_{old} + \frac{i}{m} cost
-\end{equation}
-where~$v_{new}$ is the new value, ~$v_{old}$ is the old value,~$i$ is the index of the movement in this series of movements, ~$m$ is the length of the series of movements and~$cost$ ist the value of cost function.
-	\item Dissipate pheromones \hfill \\
-		Pheromone for each of the boards that has been visited at least once by any ant in this game is decreased by multiplying the value by a parameter.
-\begin{equation}
-\label{eq:dissipationequation}
-	v_{new} =  v_{old} *  (1 - dissipation)
-\end{equation}
-where~$v_{new}$ is the new value, ~$v_{old}$ is the old value and~$dissipation$ is a parameter. 
-\end{enumerate}
-
-Pheromones can be stored to a file. The file consists of a list of pheromones, which can be used when playing in the Run panel. Each is described with two lines:
-\begin{enumerate}
- 	\item String representation of a board, left to right, bottom to up, where \# means no chessman, upper case letters mean white chessmen and lower case letters mean black chessmen \hfill \\
-	\item A list of moves. Each move is described by five integer values. First two are the coordinates of chessman to move, third and fourth where to move the chessman to, the fifth is a special value used for promotion (when a pawn becomes another chess piece) and the sixth a real value of pheromone describing its effectiveness. \hfill \\
-\end{enumerate}
-
-\subsubsection{Experiments}
-
-Firstly, it has to be accentuated that chess is a complex game, the number of possible boards that have to be remembered in pheromones is huge and for each ant move another move has to be done by external Artificial Intelligence. Because of these reasons the learning phase of this metaheuristic takes a very long time. To get results appearing significantly different from completely random ones, hours have to be spent on learning. This makes it very difficult and time-consuming to experiment with parameters properly.
-
-\begin{figure}[!htb]
-	\centering
-	\includegraphics[width=0.5\textwidth]{ant/antapplication.png} 
-	\caption{Ant colony dialog boxes}
-	\label{fig:antapplication}
-\end{figure}
-
-For the experiments the parametrization of many ant search specific variables has been put into dialog boxes in the application(Figure \ref{fig:antapplication}). This way user can change these values easily and create his own colonies. The user-available parameters are as follows:
-
-\begin{itemize}
- 	\item Number of turns \hfill \\
-The number of turns for each iteration. Each iteration consists of an all concurrent ants playing one game of chance up to a win, lose, draw or the artificial end of game, when it takes too long. This parameter should be kept low if we want the learning phase to take less time and if we want ants to have more broad "knowledge" of possible moves in the beginning of the game. 
-	\item Concurrent ants \hfill \\
-The number of ants playing a game in each iteration. The more of them the longer each iteration takes.
- 	\item Dissipation level \hfill \\
-The dissipation parameter of ant search algorithm dissipation equation (Equation~\ref{eq:dissipationequation}).
-	\item Piece weight \hfill \\
-Each piece has its own weight used in cost function (Equation~\ref{eq:costfunction})
-	\item Move history \hfill \\
-This parameter sets the starting position of the game from any point, provided a valid chess move history. Each ant in each iteration starts its game from this point and plays up until the end of the game (including the end of maximum number of turns defined as another parameter)
-\end{itemize}
-
-The more obvious rules had to be applied to get to the point of metaheuristic being better than a random algorithm and able to win one game out of hundreds when playing against the artificial intelligence. Most importantly the weight of king should far bigger than other figures, the number of turns small, and a move history provided that gives a possibility of winning in a few turns. Increasing the number of concurrent ants and, at the same time, the dissipation level makes the results possibly even better but by a very small margin at the cost of a longer learning phase (making it difficult to test).
-
-
-\subsubsection{Result}
-
-Meddling in all of these parameters proved to be insufficient in obtaining better results. After careful debugging of the application, the conclusion has been made, that the possible reason for improvement could be to increase the probability of choosing good moves instead of dwell on the bad moves. Even though the move choosing equation (Equation~\ref{eq:choosingequation}) gives more probability to good moves, it is not very significant to the sum of all the probabilities, because there are generally a lot of bad moves. One of the ideas was to sum up the logarithms of values in equation, which is often a way of dealing with those kind of issues. This however only made the values of pheromones more close to each other so the probability of choosing a good move didn't really change that much. 
-\begin{figure*}[!htb]
-	\centering
-	\includegraphics[width=0.85\textwidth]{genetic/genetic_crossing.png} 
-	\caption{Genetic - crossing phase}
-	\label{fig:genetic_crossing}
-\end{figure*}
-The really important change was observed when the Equation~\ref{eq:choosingequation} was modified to one with a "tolerance" factor multiplied by each value except the best one. This way the probability of choosing the best move in training is big, enabling  the colony to thoroughly establish how good of a situation on the board it results in. This can quite easily culminate in a fall into a local maximum of cost function, but it is not a bad situation to be in chess - at least we end up in a better situation than before. Additionally to really fall into a local maximum the moves have to contain a lot of weight gain, so it would be most probably a checkmate anyway, which is, for all intents and purposes, a global maximum. Indeed, if a winning sequence of moves has been established in this version the colony started winning very often. At this point a file containing the pheromones could be exported and played in Greedy Mode to win games. 
 
 \subsection{Genetic algorithm}
 \label{sec:genetic}
