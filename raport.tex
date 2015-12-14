@@ -33,7 +33,7 @@
 \newcommand{\eng}[1]{(ang.\ \emph{#1})}
 
 \title{Metaheuristic Chess Artificial Intelligence}
-\author{Maciej Borkowski\\ 195968@student.pwr.edu.pl \and Paweł Pałus\\ 197004@student.pwr.edu.pl  \and Mariusz Waszczyński\\  192660@student.pwr.edu.pl }
+\author{Paweł Pałus\\ 197004@student.pwr.edu.pl  \and Mariusz Waszczyński\\  192660@student.pwr.edu.pl }
 
 \begin{document}
 \thispagestyle{empty}
@@ -53,7 +53,7 @@
 \section{Introduction}
 \label{sec:introduction}
 
-In nowadays metaheuristics are increasingly used in different aspects. They base on nature. Many problems are tried solve by those procedures which unfortunately can not give the optimal global solution. That is the cost, hence computing is not highly important. The memory should be considered. The "human DNA contains about 3 billion nucleotides constituting genes, regulatory sequences and other non-coding regions all residing in a one-dimensional sequence that is organized in 3-dimensional space" [(http://www.biomedcentral.com/content/pdf/1742-4682-7-3.pdf)]. This is the huge memory in which can be stored any informations.
+In nowadays metaheuristics are increasingly used in different aspects. They base on nature. Many problems are tried solve by those procedures which unfortunately can not give the optimal global solution. That is the cost, hence computing is not highly important. The memory should be considered. The "human DNA contains about 3 billion nucleotides constituting genes, regulatory sequences and other non-coding regions all residing in a one-dimensional sequence that is organized in 3-dimensional space" ~\cite{dna}. This is the huge memory in which can be stored any informations.
 
 Main goal is to use yet another Artificial Intelligence. There are significant number of IT systems try to appear intelligent one way to another. For example decision trees, neural networks, fuzzy logic. Each of them has different benefits. Therefore the aim is to extend the database of known solutions to have more potentials. There are many fields where metaheuristics can be applied. One of them where intelligence has major factor are multiplayer games. Today appeard e-sport, which many players contend together. Learning with artifical intelligence which imitates a real player could be very helpful. 
 
@@ -61,7 +61,7 @@ In the paper game of chess is considered. The game is popular and its rules are 
 The most important here is training. Each chess figure has well-defined moves it is able to take, which results in an astoundingly big number of possible scenarios. A new player quickly finds out that some pieces are more important than others and subconsciously assign to them different weights. It is an important property, which is generally taken into consideration when designing an artificial chess player.~\cite{comparison}
 
 
-From the perspective of one of the players a real chess game is not deterministic. Nevertheless, a metaheuristic could be used in this situation to learn from its own miastakes when playing a game of chess, especially when the rival always uses the same strategy (which is the case when playing with a normal chess AI). The main goal of this research is to check how would genetic, ant colony search and simulated annealing algorithms behave when used as an artificial intelligence in chess game.
+From the perspective of one of the players a real chess game is not deterministic. Nevertheless, a metaheuristic could be used in this situation to learn from its own miastakes when playing a game of chess, especially when the rival always uses the same strategy (which is the case when playing with a normal chess AI). The main goal of this research is to check how would genetic and simulated annealing algorithms behave when used as an artificial intelligence in chess game.
 
 
 The paper is organised as follows: Section 2 contains the description of considered problem and its mathematical model. In Section 3 the experimentation system being GUI is introduced and described. Section 4 covers description and results for Genetic Algorithm and Simulated Annealing and also ideas for their enhancements, separately for each algorithm. Section 5 contains ideas for improvements in application. Section 6 presents conclusions and possibilities for further work
@@ -118,7 +118,7 @@ From the side of our application the UCI interface had to be implemented, as wel
 	\label{fig:initialRunPanel}
 \end{figure}
 
-Figure \ref{fig:initialRunPanel} shows run panel that is displayed after starting the application. On the right side of the application the user can see options for white and black player. Checking proper radio button one can choose what type of player will play a game as white player and also as a black player. The choices are: AI (Firenzina engine), human, or one of 3 metaheuristics. There are also File buttons that are used to input knowledge base for ant search algorithm and genetic algorithm (proper file button for proper white or black player), and a Next button that is used to make movements one after another from a textbox that is located in annealing tab. It will be further discussed in a later section. The Next button is not displayed in another figures.
+Figure \ref{fig:initialRunPanel} shows run panel that is displayed after starting the application. On the right side of the application the user can see options for white and black player. Checking proper radio button one can choose what type of player will play a game as white player and also as a black player. The choices are: AI (Firenzina engine), human, or one of 3 metaheuristics. There are also File buttons that are used to input knowledge base for genetic algorithm (proper file button for proper white or black player), and a Next button that is used to make movements one after another from a textbox that is located in annealing tab. It will be further discussed in a later section. The Next button is not displayed in another figures.
 
 \begin{figure}[!htb]
 	\centering
@@ -159,7 +159,14 @@ At the top of the application are tabs for metaheuristics, where the learning ph
 
 Our second proposal of a metaheuristic algortihm is the genetic algortihm. It is purely related to how living beings nature evolves through the ages. Looking at it from the perspective of one life beaing equal to one chess game, it may give interesting results. The population consist of many individuals living through their lifes, which in this case are end up being games. The individual is a set of gens which here are called moves. From a programming point of view a mapping is created between a placement of chess pieces on a chessboard and a move for the current player, when provided such board. Each individual is additionally annotated with a real value, which describes the fitness of the final move, calculated with help of cost function (Equation~\ref{eq:costfunction}).
 
-In the application each metaheuristic algorithm works as a set of players. Even Artificial Inteligence is marked as player. Hence different players can play against each other. Genetic player is divided into two modes (similar to the ant colony algorithm's):
+\begin{figure*}[!htb]
+	\centering
+	\includegraphics[width=0.85\textwidth]{genetic/genetic_crossing.png}
+	\caption{Genetic - crossing phase}
+	\label{fig:genetic_crossing}
+\end{figure*}
+
+In the application each metaheuristic algorithm works as a set of players. Even Artificial Inteligence is marked as player. Hence different players can play against each other. Genetic player is divided into two modes:
 \begin{itemize}
  	\item Adventurous Mode \hfill \\
 		Used for learning. In this case the individual is created. The moves are chosen randomly.
@@ -354,12 +361,11 @@ Implementation of prediction of one or several moves ahead could make the algori
 \begin{thebibliography}{99}
 
 \bibitem{comparison} \textsc{Vecek, N. ; Crepinsek, M. ; Mernik, M. ; Hrncic, D.}, A comparison between different chess rating systems for ranking evolutionary algorithms 
-\bibitem{ant} \textsc{Dorigo, M. ; Maniezzo, V. ; Colorni, A.}, Ant system: optimization by a colony of cooperating agents 
 \bibitem{genetic} \textsc{David, O.E. ; van den Herik, H.J. ; Koppel, M. ; Netanyahu, N.S. }, Genetic Algorithms for Evolving Computer Chess Programs 
 \bibitem{annealing} \textsc{S. Kirkpatrick; C. D. Gelatt; M. P. Vecchi.}, Optimization by Simulated Annealing 
+\bibitem{dna} \textsc{David J D’Onofrio ; Gary An}, A comparative approach for the investigation of biological information processing: An examination of the structure and function of computer hard drives and DNA
 \bibitem{uci} \textsc{R. Huber, S. Meyer-Kahlen}, Universal Chess Interface, http://www.shredderchess.com/chess-info/features/uci-universal-chess-interface.html, 2015/06/01
 \bibitem{firenzina} \textsc{Kranium (Norman Schmidt), Yuri Censor (Dmitri Gusev)}, Firenzina Engine, http://firenzina.wikispaces.com/, 2015/06/01
-
 \end{thebibliography}
 \end{document}
 
